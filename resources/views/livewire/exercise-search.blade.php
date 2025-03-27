@@ -36,6 +36,6 @@
             </div>
         @endif
 
-        <input type="hidden" name="exercise_id" value="{{ $selectedExercise ? $selectedExercise->id : '' }}">
+        <input type="hidden" name="exercise_id" value="{{ $selectedExercise ? $selectedExercise->id : '' }}" required>
     </div>
 </div> 

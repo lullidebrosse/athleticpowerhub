@@ -9,19 +9,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Quick Actions -->
             <div class="mb-6">
-                <div class="flex space-x-4">
-                    <button class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <div class="flex space-x-8">
+                    <a href="{{ route('metrics.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                         Log New Workout
-                    </button>
-                    <button class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    </a>
+                    <a href="{{ route('exercises.create') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                         Add New Exercise
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                     </svg>
                                 </div>
-                                <h3 class="text-lg font-medium text-gray-900 mb-2">No Personal Records Yet</h3>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">No Metrics Yet</h3>
                                 <p class="text-gray-500 mb-6">Start tracking your fitness journey by logging your first metric.</p>
                                 <div class="space-x-4">
                                     <a href="{{ route('metrics.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
@@ -50,102 +50,85 @@
                         </div>
                     </div>
                 @else
-                    <!-- Bench Press PR -->
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-red-100 text-red-500">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                                </svg>
-                            </div>
-                            <div class="ml-4">
-                                <h2 class="text-sm font-medium text-gray-600">Bench Press 5RM</h2>
-                                <p class="text-lg font-semibold text-gray-900">
-                                    {{ $benchPressPR ? $benchPressPR->formatted_value : 'No data' }}
-                                </p>
-                                @if(isset($monthlyChanges[$benchPressPR->exercise_id]))
-                                    <div class="flex items-center text-sm {{ $monthlyChanges[$benchPressPR->exercise_id]['value'] > 0 ? 'text-green-600' : 'text-red-600' }}">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $monthlyChanges[$benchPressPR->exercise_id]['value'] > 0 ? 'M5 10l7-7m0 0l7 7m-7-7v18' : 'M19 14l-7 7m0 0l-7-7m7 7V3' }}" />
-                                        </svg>
-                                        <span>{{ abs($monthlyChanges[$benchPressPR->exercise_id]['value']) }} {{ $monthlyChanges[$benchPressPR->exercise_id]['unit'] }} from last month</span>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 40 Yard Dash -->
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-blue-100 text-blue-500">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                            </div>
-                            <div class="ml-4">
-                                <h2 class="text-sm font-medium text-gray-600">40 Yard Dash</h2>
-                                <p class="text-lg font-semibold text-gray-900">
-                                    {{ $sprintPR ? $sprintPR->formatted_value : 'No data' }}
-                                </p>
-                                @if(isset($monthlyChanges[$sprintPR->exercise_id]))
-                                    <div class="flex items-center text-sm {{ $monthlyChanges[$sprintPR->exercise_id]['value'] < 0 ? 'text-green-600' : 'text-red-600' }}">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $monthlyChanges[$sprintPR->exercise_id]['value'] < 0 ? 'M5 10l7-7m0 0l7 7m-7-7v18' : 'M19 14l-7 7m0 0l-7-7m7 7V3' }}" />
-                                        </svg>
-                                        <span>{{ abs($monthlyChanges[$sprintPR->exercise_id]['value']) }} {{ $monthlyChanges[$sprintPR->exercise_id]['unit'] }} from last month</span>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vertical Leap -->
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-green-100 text-green-500">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                </svg>
-                            </div>
-                            <div class="ml-4">
-                                <h2 class="text-sm font-medium text-gray-600">Vertical Leap</h2>
-                                <p class="text-lg font-semibold text-gray-900">
-                                    {{ $verticalLeapPR ? $verticalLeapPR->formatted_value : 'No data' }}
-                                </p>
-                                @if(isset($monthlyChanges[$verticalLeapPR->exercise_id]))
-                                    <div class="flex items-center text-sm {{ $monthlyChanges[$verticalLeapPR->exercise_id]['value'] > 0 ? 'text-green-600' : 'text-red-600' }}">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $monthlyChanges[$verticalLeapPR->exercise_id]['value'] > 0 ? 'M5 10l7-7m0 0l7 7m-7-7v18' : 'M19 14l-7 7m0 0l-7-7m7 7V3' }}" />
-                                        </svg>
-                                        <span>{{ abs($monthlyChanges[$verticalLeapPR->exercise_id]['value']) }} {{ $monthlyChanges[$verticalLeapPR->exercise_id]['unit'] }} from last month</span>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Agility Time -->
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-500">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                            </div>
-                            <div class="ml-4">
-                                <h2 class="text-sm font-medium text-gray-600">Agility Time</h2>
-                                <p class="text-lg font-semibold text-gray-900">
-                                    {{ $agilityPR ? $agilityPR->formatted_value : 'No data' }}
-                                </p>
-                                @if(isset($monthlyChanges[$agilityPR->exercise_id]))
-                                    <div class="flex items-center text-sm {{ $monthlyChanges[$agilityPR->exercise_id]['value'] < 0 ? 'text-green-600' : 'text-red-600' }}">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $monthlyChanges[$agilityPR->exercise_id]['value'] < 0 ? 'M5 10l7-7m0 0l7 7m-7-7v18' : 'M19 14l-7 7m0 0l-7-7m7 7V3' }}" />
-                                        </svg>
-                                        <span>{{ abs($monthlyChanges[$agilityPR->exercise_id]['value']) }} {{ $monthlyChanges[$agilityPR->exercise_id]['unit'] }} from last month</span>
-                                    </div>
-                                @endif
+                    <!-- Recent Metrics -->
+                    <div class="col-span-full">
+                        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                            <div class="p-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Recent Metrics</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Exercise</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Load</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reps</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sets</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Distance</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Height</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Speed</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            @foreach($metrics as $metric)
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm font-medium text-gray-900">
+                                                            {{ $metric->exercise->name }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ str_replace('_', ' ', $metric->metric_type) }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ $metric->load ? $metric->load . ' lbs' : '-' }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ $metric->reps ?? '-' }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ $metric->sets ?? '-' }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ $metric->duration ? $metric->duration . ' sec' : '-' }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ $metric->distance ? $metric->distance . ' m' : '-' }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ $metric->height ? $metric->height . ' in' : '-' }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ $metric->speed ? $metric->speed . ' mph' : '-' }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">
+                                                            {{ $metric->performed_at ? $metric->performed_at->format('M d, Y') : '-' }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -164,45 +147,21 @@
                         
                         <!-- Activity Timeline -->
                         <div class="space-y-4">
-                            <div class="flex items-start space-x-3">
-                                <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                        </svg>
+                            @foreach($recentActivities as $activity)
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 rounded-full bg-{{ $activity['icon_color'] }}-100 flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-{{ $activity['icon_color'] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $activity['icon'] }}" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">{{ $activity['message'] }}</p>
+                                        <p class="text-xs text-gray-500">{{ $activity['date']->diffForHumans() }}</p>
                                     </div>
                                 </div>
-                                <div class="flex-1">
-                                    <p class="text-sm text-gray-900">Logged new Bench Press PR: 205 lbs x 5 reps</p>
-                                    <p class="text-xs text-gray-500">2 hours ago</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start space-x-3">
-                                <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-sm text-gray-900">Improved 40-yard dash time to 4.8 seconds</p>
-                                    <p class="text-xs text-gray-500">Yesterday</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start space-x-3">
-                                <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-sm text-gray-900">Completed leg day workout</p>
-                                    <p class="text-xs text-gray-500">2 days ago</p>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

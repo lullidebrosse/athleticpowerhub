@@ -19,59 +19,37 @@ class DashboardController extends Controller
             return view('dashboard', compact('hasData'));
         }
 
-        // Get the latest PRs for different types of exercises
-        $benchPressPR = $user->personalRecords()
+        // Get the latest metrics
+        $metrics = $user->metrics()
             ->with(['exercise'])
-            ->whereHas('exercise', function ($query) {
-                $query->where('name', 'like', '%Bench Press%');
-            })
-            ->where('record_type', 'WEIGHT_BASED')
             ->latest()
-            ->first();
+            ->take(5)
+            ->get();
 
-        $sprintPR = $user->personalRecords()
+        // Get recent activities (metrics) for the activity feed
+        $recentActivities = $user->metrics()
             ->with(['exercise'])
-            ->whereHas('exercise', function ($query) {
-                $query->where('name', 'like', '%40 Yard Dash%');
-            })
-            ->where('record_type', 'TIME_BASED')
             ->latest()
-            ->first();
+            ->take(3)
+            ->get()
+            ->map(function ($metric) {
+                $activity = [
+                    'type' => 'metric',
+                    'exercise' => $metric->exercise->name,
+                    'date' => $metric->performed_at,
+                    'icon' => 'M12 6v6m0 0v6m0-6h6m-6 0H6',
+                    'icon_color' => 'indigo',
+                    'message' => $this->formatActivityMessage($metric)
+                ];
+                return $activity;
+            });
 
-        $verticalLeapPR = $user->personalRecords()
-            ->with(['exercise'])
-            ->whereHas('exercise', function ($query) {
-                $query->where('name', 'like', '%Vertical Leap%');
-            })
-            ->where('record_type', 'HEIGHT_BASED')
-            ->latest()
-            ->first();
-
-        $agilityPR = $user->personalRecords()
-            ->with(['exercise'])
-            ->whereHas('exercise', function ($query) {
-                $query->where('name', 'like', '%Agility%');
-            })
-            ->where('record_type', 'TIME_BASED')
-            ->latest()
-            ->first();
-
-        // Calculate month-over-month changes
-        $monthlyChanges = $this->calculateMonthlyChanges($user);
-
-        return view('dashboard', compact(
-            'hasData',
-            'benchPressPR',
-            'sprintPR',
-            'verticalLeapPR',
-            'agilityPR',
-            'monthlyChanges'
-        ));
+        return view('dashboard', compact('hasData', 'metrics', 'recentActivities'));
     }
 
     protected function hasUserData($userId)
     {
-        return PersonalRecord::where('user_id', $userId)->exists();
+        return Metric::where('user_id', $userId)->exists();
     }
 
     protected function calculateMonthlyChanges($user)
@@ -106,5 +84,34 @@ class DashboardController extends Controller
         }
 
         return $changes;
+    }
+
+    protected function formatActivityMessage($metric)
+    {
+        $parts = [];
+        
+        if ($metric->load) {
+            $parts[] = "{$metric->load} lbs";
+        }
+        if ($metric->reps) {
+            $parts[] = "{$metric->reps} reps";
+        }
+        if ($metric->sets) {
+            $parts[] = "{$metric->sets} sets";
+        }
+        if ($metric->duration) {
+            $parts[] = "{$metric->duration} sec";
+        }
+        if ($metric->distance) {
+            $parts[] = "{$metric->distance} m";
+        }
+        if ($metric->height) {
+            $parts[] = "{$metric->height} in";
+        }
+        if ($metric->speed) {
+            $parts[] = "{$metric->speed} mph";
+        }
+
+        return "Logged {$metric->exercise->name}: " . implode(' × ', $parts);
     }
 } 
