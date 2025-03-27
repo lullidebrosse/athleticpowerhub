@@ -26,3 +26,14 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('exercises', ExerciseController::class);
+
+        // Admin routes
+        Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+            Route::resource('exercises', ExerciseController::class);
+            Route::post('exercises/{exercise}/approve', [ExerciseController::class, 'approve'])->name('exercises.approve');
+            Route::post('exercises/{exercise}/reject', [ExerciseController::class, 'reject'])->name('exercises.reject');
+        });
+});
