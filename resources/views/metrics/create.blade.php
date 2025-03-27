@@ -17,105 +17,96 @@
                         <input type="hidden" name="metric_type" value="MAX_WEIGHT">
 
                         <!-- All Metric Input Fields -->
-                        <div class="space-y-4">
-                            <!-- Load/Weight -->
-                            <div>
-                                <label for="load" class="block text-sm font-medium text-gray-700">Weight (lbs)</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input type="number" step="0.01" name="load" id="load" value="{{ old('load') }}"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <span class="text-gray-500 sm:text-sm">lbs</span>
+                        <div class="mt-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Performance Metrics</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Strength Metrics -->
+                                <div class="space-y-4">
+                                    <h4 class="text-sm font-medium text-gray-700">Strength</h4>
+                                    <!-- Load/Weight -->
+                                    <div>
+                                        <label for="load" class="block text-sm font-medium text-gray-700">Weight (lbs)</label>
+                                        <input type="number" step="0.01" name="load" id="load" value="{{ old('load') }}"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        @error('load')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Reps -->
+                                    <div>
+                                        <label for="reps" class="block text-sm font-medium text-gray-700">Repetitions</label>
+                                        <input type="number" name="reps" id="reps" value="{{ old('reps') }}"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        @error('reps')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Sets -->
+                                    <div>
+                                        <label for="sets" class="block text-sm font-medium text-gray-700">Number of Sets</label>
+                                        <input type="number" name="sets" id="sets" value="{{ old('sets') }}"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        @error('sets')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
-                                @error('load')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
 
-                            <!-- Reps -->
-                            <div>
-                                <label for="reps" class="block text-sm font-medium text-gray-700">Repetitions</label>
-                                <input type="number" name="reps" id="reps" value="{{ old('reps') }}"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('reps')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+                                <!-- Endurance Metrics -->
+                                <div class="space-y-4">
+                                    <h4 class="text-sm font-medium text-gray-700">Endurance</h4>
+                                    <!-- Duration -->
+                                    <div>
+                                        <label for="duration" class="block text-sm font-medium text-gray-700">Duration (sec)</label>
+                                        <input type="number" step="0.01" name="duration" id="duration" value="{{ old('duration') }}"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        @error('duration')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                    </div>
 
-                            <!-- Sets -->
-                            <div>
-                                <label for="sets" class="block text-sm font-medium text-gray-700">Number of Sets</label>
-                                <input type="number" name="sets" id="sets" value="{{ old('sets') }}"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('sets')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+                                    <!-- Distance -->
+                                    <div>
+                                        <label for="distance" class="block text-sm font-medium text-gray-700">Distance (m)</label>
+                                        <input type="number" step="0.01" name="distance" id="distance" value="{{ old('distance') }}"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        @error('distance')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                    </div>
 
-                            <!-- Duration -->
-                            <div>
-                                <label for="duration" class="block text-sm font-medium text-gray-700">Duration (seconds)</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input type="number" step="0.01" name="duration" id="duration" value="{{ old('duration') }}"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <span class="text-gray-500 sm:text-sm">sec</span>
+                                    <!-- Speed -->
+                                    <div>
+                                        <label for="speed" class="block text-sm font-medium text-gray-700">Speed (mph)</label>
+                                        <input type="number" step="0.01" name="speed" id="speed" value="{{ old('speed') }}"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        @error('speed')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
-                                @error('duration')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
 
-                            <!-- Distance -->
-                            <div>
-                                <label for="distance" class="block text-sm font-medium text-gray-700">Distance (meters)</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input type="number" step="0.01" name="distance" id="distance" value="{{ old('distance') }}"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <span class="text-gray-500 sm:text-sm">m</span>
+                                <!-- Power Metrics -->
+                                <div class="space-y-4">
+                                    <h4 class="text-sm font-medium text-gray-700">Power</h4>
+                                    <!-- Height -->
+                                    <div>
+                                        <label for="height" class="block text-sm font-medium text-gray-700">Height (in)</label>
+                                        <input type="number" step="0.01" name="height" id="height" value="{{ old('height') }}"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        @error('height')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
-                                @error('distance')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Height -->
-                            <div>
-                                <label for="height" class="block text-sm font-medium text-gray-700">Height (inches)</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input type="number" step="0.01" name="height" id="height" value="{{ old('height') }}"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <span class="text-gray-500 sm:text-sm">in</span>
-                                    </div>
-                                </div>
-                                @error('height')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Speed -->
-                            <div>
-                                <label for="speed" class="block text-sm font-medium text-gray-700">Speed (mph)</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input type="number" step="0.01" name="speed" id="speed" value="{{ old('speed') }}"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <span class="text-gray-500 sm:text-sm">mph</span>
-                                    </div>
-                                </div>
-                                @error('speed')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
                         </div>
 
                         <!-- Common Fields for All Metric Types -->
-                        <div class="space-y-4">
+                        <div class="mt-8 space-y-4">
+                            <h3 class="text-lg font-medium text-gray-900">Additional Information</h3>
                             <!-- Performed At Date -->
                             <div>
                                 <label for="performed_at" class="block text-sm font-medium text-gray-700">Date Performed</label>

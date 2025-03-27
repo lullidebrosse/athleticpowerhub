@@ -13,20 +13,15 @@ class ExerciseSearch extends Component
 
     public function updatedSearch()
     {
-        if (strlen($this->search) >= 2) {
-            $this->exercises = Exercise::where('is_approved', true)
-                ->where('name', 'like', '%' . $this->search . '%')
-                ->limit(10)
-                ->get();
-        } else {
-            $this->exercises = [];
-        }
+        $this->exercises = Exercise::where('name', 'like', '%' . $this->search . '%')
+            ->take(5)
+            ->get();
     }
 
     public function selectExercise($exerciseId)
     {
         $this->selectedExercise = Exercise::find($exerciseId);
-        $this->search = $this->selectedExercise->name;
+        $this->search = $this->selectedExercise ? $this->selectedExercise->name : '';
         $this->exercises = [];
     }
 
