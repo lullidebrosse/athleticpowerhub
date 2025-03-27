@@ -64,4 +64,33 @@ class User extends Authenticatable
     {
         return $this->hasMany(Exercise::class);
     }
+
+    public function metrics()
+    {
+        return $this->hasMany(Metric::class);
+    }
+
+    public function personalRecords()
+    {
+        return $this->hasMany(PersonalRecord::class);
+    }
+
+    // Helper method to get the latest PR for a specific exercise and record type
+    public function getLatestPR($exerciseId, $recordType)
+    {
+        return $this->personalRecords()
+            ->where('exercise_id', $exerciseId)
+            ->where('record_type', $recordType)
+            ->latest()
+            ->first();
+    }
+
+    // Helper method to get all PRs for a specific exercise
+    public function getExercisePRs($exerciseId)
+    {
+        return $this->personalRecords()
+            ->where('exercise_id', $exerciseId)
+            ->orderBy('achieved_at', 'desc')
+            ->get();
+    }
 }
