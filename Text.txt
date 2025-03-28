@@ -2,7 +2,7 @@
 Create a new table exercise_pr_types to store available PR types
 Add a pivot table exercise_pr_type_exercise to link exercises with their PR types
 Add necessary columns to personal_records table if not already present
-2.Models & Relationships
+2.Models & Relationships ✓
 Create ExercisePrType model
 Add relationships:
 Exercise belongsToMany PrTypes

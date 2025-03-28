@@ -29,4 +29,15 @@ class Exercise extends Model
     {
         return $this->hasMany(Metric::class);
     }
+
+    public function prTypes()
+    {
+        return $this->belongsToMany(ExercisePrType::class, 'exercise_pr_type_exercise')
+            ->withTimestamps();
+    }
+
+    public function personalRecords()
+    {
+        return $this->hasMany(PersonalRecord::class);
+    }
 }

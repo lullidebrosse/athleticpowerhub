@@ -12,6 +12,7 @@ class PersonalRecord extends Model
     protected $fillable = [
         'user_id',
         'exercise_id',
+        'exercise_pr_type_id',
         'metric_id',
         'record_type',
         'calculated_value',
@@ -36,6 +37,11 @@ class PersonalRecord extends Model
         return $this->belongsTo(Exercise::class);
     }
 
+    public function prType()
+    {
+        return $this->belongsTo(ExercisePrType::class, 'exercise_pr_type_id');
+    }
+
     public function metric()
     {
         return $this->belongsTo(Metric::class);
@@ -52,7 +58,7 @@ class PersonalRecord extends Model
     {
         $previousRecord = static::where('user_id', $this->user_id)
             ->where('exercise_id', $this->exercise_id)
-            ->where('record_type', $this->record_type)
+            ->where('exercise_pr_type_id', $this->exercise_pr_type_id)
             ->where('id', '!=', $this->id)
             ->latest()
             ->first();
