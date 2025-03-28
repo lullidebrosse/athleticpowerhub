@@ -41,5 +41,40 @@
         @stack('modals')
 
         @livewireScripts
+
+        <script>
+            document.addEventListener('livewire:initialized', () => {
+                console.log('Livewire initialized');
+                
+                Livewire.on('prefill-metric', (event) => {
+                    console.log('Received prefill-metric event:', event);
+                    const data = event[0]; // Get the first item from the array
+                    
+                    // Pre-fill all form fields
+                    Object.keys(data).forEach(key => {
+                        const input = document.getElementById(key);
+                        console.log(`Looking for input with id ${key}:`, input);
+                        if (input) {
+                            input.value = data[key] || '';
+                            console.log(`Set value for ${key}:`, input.value);
+                            // Trigger input event to ensure any dependent calculations are updated
+                            input.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                    });
+
+                    // If exercise_id is provided, update the exercise search input
+                    if (data.exercise_id) {
+                        const exerciseSearch = document.getElementById('exercise_search');
+                        console.log('Found exercise search input:', exerciseSearch);
+                        if (exerciseSearch) {
+                            exerciseSearch.value = data.exercise_name || '';
+                            console.log('Set exercise name:', data.exercise_name);
+                            // Trigger the search update
+                            exerciseSearch.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

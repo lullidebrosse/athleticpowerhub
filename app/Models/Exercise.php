@@ -24,4 +24,9 @@ class Exercise extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function metrics()
+    {
+        return $this->hasMany(Metric::class);
+    }
 }

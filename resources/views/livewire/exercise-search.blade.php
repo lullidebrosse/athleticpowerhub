@@ -26,7 +26,7 @@
                 @foreach($exercises as $exercise)
                     <button
                         type="button"
-                        wire:click="selectExercise({{ $exercise->id }})"
+                        wire:click.live="selectExercise({{ $exercise->id }})"
                         @click="open = false"
                         class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                     >
@@ -38,4 +38,36 @@
 
         <input type="hidden" name="exercise_id" value="{{ $selectedExercise ? $selectedExercise->id : '' }}" required>
     </div>
+
+    @if($selectedExercise && count($previousMetrics) > 0)
+        <div class="mt-4">
+            <h4 class="text-sm font-medium text-gray-700 mb-2">Previous Metrics</h4>
+            <div class="space-y-2">
+                @foreach($previousMetrics as $metric)
+                    <button
+                        type="button"
+                        wire:click="selectMetric({{ $metric->id }})"
+                        class="w-full text-left px-4 py-2 text-sm bg-gray-50 hover:bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                        <div class="flex justify-between items-center">
+                            <div>
+                                {{ $metric->performed_at ? $metric->performed_at->format('M d, Y') : 'No date' }}
+                            </div>
+                            <div class="text-gray-600">
+                                @if($metric->load)
+                                    {{ $metric->load }}lbs
+                                @endif
+                                @if($metric->reps)
+                                    × {{ $metric->reps }} reps
+                                @endif
+                                @if($metric->sets)
+                                    × {{ $metric->sets }} sets
+                                @endif
+                            </div>
+                        </div>
+                    </button>
+                @endforeach
+            </div>
+        </div>
+    @endif
 </div> 
