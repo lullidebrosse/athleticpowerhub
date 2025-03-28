@@ -1,0 +1,49 @@
+1. Database Changes
+Create a new table exercise_pr_types to store available PR types
+Add a pivot table exercise_pr_type_exercise to link exercises with their PR types
+Add necessary columns to personal_records table if not already present
+2.Models & Relationships
+Create ExercisePrType model
+Add relationships:
+Exercise belongsToMany PrTypes
+PrType belongsToMany Exercises
+Exercise hasMany PersonalRecords
+PersonalRecord belongsTo Exercise and PrType
+3.Exercise Creation Form
+Modify the exercise creation form to include PR type selection
+Add a multiple select field for PR types
+Add validation rules for PR type selection
+Update the ExerciseController to handle PR type assignments
+4.Exercise Edit Functionality
+Add PR type selection to exercise edit form
+Update the controller to handle PR type changes
+Ensure existing records are not affected by changes
+5.Personal Record Logic
+Update the PR checking logic to consider exercise-specific PR types
+Modify the checkAndStorePR method to only check relevant PR types
+Add validation to ensure metrics match selected PR types
+6.Dashboard Updates
+Modify the dashboard to show PRs based on exercise-specific types
+Update the PR indicators to show the specific type of PR
+Add filtering/sorting options for different PR types
+7.Exercise Details View
+Create/update the exercise details view to show:
+Available PR types for the exercise
+Current PRs for each type
+Historical PR data
+8.User Interface Improvements
+Add clear visual indicators for PR types
+Implement tooltips/help text explaining PR types
+Add confirmation dialogs for PR type changes
+9.Testing
+Write tests for:
+PR type assignment
+PR calculation and storage
+Exercise-PR type relationships
+User interface interactions
+10.Documentation
+Add documentation for:
+Available PR types
+How to set up PR tracking
+How to manage PR types
+Best practices for users

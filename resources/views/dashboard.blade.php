@@ -77,6 +77,14 @@
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <div class="text-sm font-medium text-gray-900">
                                                             {{ $metric->exercise->name }}
+                                                            @if($metric->is_pr)
+                                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 ml-2">
+                                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                                                    </svg>
+                                                                    PR
+                                                                </span>
+                                                            @endif
                                                         </div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">

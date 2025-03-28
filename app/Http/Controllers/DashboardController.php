@@ -19,12 +19,16 @@ class DashboardController extends Controller
             return view('dashboard', compact('hasData'));
         }
 
-        // Get the latest metrics
+        // Get the latest metrics with their PR information
         $metrics = $user->metrics()
-            ->with(['exercise'])
+            ->with(['exercise', 'personalRecords'])
             ->latest()
             ->take(5)
-            ->get();
+            ->get()
+            ->map(function ($metric) {
+                $metric->is_pr = $this->isPersonalRecord($metric);
+                return $metric;
+            });
 
         // Get recent activities (metrics) for the activity feed
         $recentActivities = $user->metrics()
@@ -113,5 +117,33 @@ class DashboardController extends Controller
         }
 
         return "Logged {$metric->exercise->name}: " . implode(' × ', $parts);
+    }
+
+    protected function isPersonalRecord($metric)
+    {
+        $calculatedValue = $metric->calculateValue();
+        if (!$calculatedValue) {
+            return false;
+        }
+
+        $recordType = match($metric->metric_type) {
+            'MAX_WEIGHT' => 'WEIGHT_BASED',
+            'REP_MAX' => 'REP_BASED',
+            'TIME' => 'TIME_BASED',
+            'DISTANCE' => 'DISTANCE_BASED',
+            'HEIGHT' => 'HEIGHT_BASED',
+            'SPEED' => 'SPEED_BASED',
+            default => null
+        };
+
+        if (!$recordType) {
+            return false;
+        }
+
+        // Check if this metric has a personal record
+        return $metric->personalRecords()
+            ->where('record_type', $recordType)
+            ->where('metric_id', $metric->id)
+            ->exists();
     }
 } 
