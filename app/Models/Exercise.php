@@ -10,34 +10,12 @@ class Exercise extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'name',
-        'description',
-        'is_approved'
-    ];
-    
-    protected $casts = [
-        'is_approved' => 'boolean'
+        'description'
     ];
 
-    public function user()
+    public function exerciseLogs()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function metrics()
-    {
-        return $this->hasMany(Metric::class);
-    }
-
-    public function prTypes()
-    {
-        return $this->belongsToMany(ExercisePrType::class, 'exercise_pr_type_exercise')
-            ->withTimestamps();
-    }
-
-    public function personalRecords()
-    {
-        return $this->hasMany(PersonalRecord::class);
+        return $this->hasMany(ExerciseLog::class);
     }
 }

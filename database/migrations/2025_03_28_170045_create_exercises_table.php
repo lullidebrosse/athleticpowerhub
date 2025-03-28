@@ -9,14 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

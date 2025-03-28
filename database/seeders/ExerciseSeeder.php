@@ -213,11 +213,9 @@ class ExerciseSeeder extends Seeder
         ];
 
         foreach ($exercises as $exercise) {
-            Exercise::create([
-                'user_id'     => 1, // Super admin user ID
+            Exercise::create([ // Super admin user ID
                 'name'        => $exercise['name'],
                 'description' => $exercise['description'],
-                'is_approved' => true,
             ]);
         }
     }
