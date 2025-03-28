@@ -1,4 +1,4 @@
-1. Database Changes
+1. Database Changes ✓
 Create a new table exercise_pr_types to store available PR types
 Add a pivot table exercise_pr_type_exercise to link exercises with their PR types
 Add necessary columns to personal_records table if not already present
