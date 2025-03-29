@@ -18,7 +18,14 @@ class ExerciseLogForm extends Component
     {
         $this->exercise = $exercise;
         $this->log_date = date('Y-m-d');
-        $this->addSet();
+        
+        // Check if we have copy data from a previous workout
+        if (session()->has('copy_data')) {
+            $copyData = session('copy_data');
+            $this->sets = $copyData['sets'];
+        } else {
+            $this->addSet();
+        }
     }
 
     public function addSet()
